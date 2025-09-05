@@ -2,13 +2,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
+    public static int proxIdCurso = 1;
+    public static int proxIdDisciplina = 1;
+    public static int proxIdUsuario = 1;
+
     public static void main(String[] args) {
 
         try {
             Sistema.carregarDados();
             Scanner sc = new Scanner(System.in);
-            int proxIdCurso = 1;
-            int proxIdDisciplina = 1;
 
             // Sistema.registrarUsuario(new Secretaria(1, "Secretaria", "123"));
 
@@ -51,14 +53,16 @@ public class App {
                             int idx = sc.nextInt();
                             sc.nextLine();
                             Curso curso = Sistema.getCursos().get(idx - 1);
-
-                            Sistema.registrarUsuario(new Aluno(100, nome, senha, curso));
+                            
+                            proxIdUsuario++;
+                            int id = proxIdUsuario;
+                            Sistema.registrarUsuario(new Aluno(id, nome, senha, curso));
                         } else if (op == 2) {
                             System.out.print("Nome professor: ");
                             String nome = sc.nextLine();
                             System.out.print("Senha: ");
                             String senha = sc.nextLine();
-                            Sistema.registrarUsuario(new Professor(200, nome, senha));
+                            Sistema.registrarUsuario(new Professor(proxIdUsuario++, nome, senha));
                         } else if (op == 3) {
                             System.out.print("Nome disciplina: ");
                             String nome = sc.nextLine();
@@ -71,8 +75,9 @@ public class App {
                             int idx = sc.nextInt();
                             sc.nextLine();
                             Curso curso = Sistema.getCursos().get(idx - 1);
-
-                            Sistema.registrarDisciplina(new Disciplina(proxIdDisciplina++, nome, curso));
+                            proxIdDisciplina++;
+                            int id = proxIdDisciplina;
+                            Sistema.registrarDisciplina(new Disciplina(id, nome, curso));
 
                         } else if (op == 4) {
                             System.out.print("Nome curso: ");
@@ -80,7 +85,9 @@ public class App {
                             System.out.print("Créditos: ");
                             int creditos = sc.nextInt();
                             sc.nextLine();
-                            Curso c = new Curso(proxIdCurso++, nome, creditos);
+                            proxIdCurso++;
+                            int id = proxIdCurso;
+                            Curso c = new Curso(id, nome, creditos);
                             Sistema.registrarCurso(c);
                             System.out.println("Curso criado: " + nome);
                         } else if (op == 5) {

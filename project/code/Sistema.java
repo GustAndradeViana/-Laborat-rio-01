@@ -131,8 +131,13 @@ public class Sistema {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] p = line.split(";");
-                Curso c = new Curso(Integer.parseInt(p[0]), p[1], Integer.parseInt(p[2]));
+                int id = Integer.parseInt(p[0]);
+                Curso c = new Curso(id, p[1], Integer.parseInt(p[2]));
                 todosCursos.add(c);
+
+                if (id > App.proxIdDisciplina) {
+                    App.proxIdDisciplina = id;
+                }
             }
         } catch (IOException e) {
         }
@@ -175,6 +180,10 @@ public class Sistema {
                     if (c != null)
                         todosUsuarios.add(new Aluno(id, nome, senha, c));
                 }
+
+                if (id > App.proxIdUsuario) {
+                    App.proxIdUsuario = id;
+                }
             }
         } catch (IOException e) {
         }
@@ -201,6 +210,10 @@ public class Sistema {
                 Curso c = todosCursos.stream().filter(x -> x.getId() == cursoId).findFirst().orElse(null);
                 if (c != null) {
                     todasDisciplinas.add(new Disciplina(id, nome, c));
+                }
+
+                if (id > App.proxIdDisciplina) {
+                    App.proxIdDisciplina = id;
                 }
             }
         } catch (IOException e) {
